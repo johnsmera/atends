@@ -49,7 +49,7 @@ export default class Open extends Component {
 
     render() {
 
-        const { atendimentos, atendimnto } = this.state;
+        const { atendimentos, atendimento } = this.state;
 
         return (
             <div class="container text-center"><br/>

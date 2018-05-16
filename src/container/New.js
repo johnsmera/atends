@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Modal from './../ui/ModalMessageAdd';
 
 export default class New extends Component {
 
@@ -12,7 +13,8 @@ export default class New extends Component {
       responsavel: '',
       problema: '',
       solucao: '',
-    }
+    },
+    showModal: false
   }
 
 
@@ -35,15 +37,27 @@ export default class New extends Component {
       .then(response => response.json())
       .then(this.getAtendimentos)
       .catch(err => console.error(err))
+
+      this.setState({
+        showModal: !this.state.showModal,
+        atendimento: {
+          cliente: '',
+          solicitante: '',
+          prioridade: '',
+          situacao: '',
+          responsavel: '',
+          problema: '',
+          solucao: '',
+        }
+      })
+
+      setTimeout(() => { this.setState({showModal: false}) }, 3000);
+
   }
-
-
-
-  //renderAtendimento = ({ cliente, solicitante, prioridade, situacao, responsavel, problema, solucao  }) => <div key={id_atendimento}>{descproduto} {precoproduto}</div>
-
+  
     render() {
 
-      const { atendimentos, atendimento, situacao } = this.state;
+      const { atendimento } = this.state;
 
 
 
@@ -53,11 +67,12 @@ export default class New extends Component {
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Início</a></li>
-    <li class="breadcrumb-item"><a href="#">Atendimento</a></li>
+    <li class="breadcrumb-item">Início</li>
+    <li class="breadcrumb-item">Atendimento</li>
     <li class="breadcrumb-item active" aria-current="page">Novo</li>
   </ol>
 </nav>
+<Modal showModal={this.state.showModal}> </Modal>
         <form>
   <div class="row">
   <div class="form-group col-sm-6">
@@ -67,8 +82,8 @@ export default class New extends Component {
       class="form-control" 
       id="exampleFormControlInput1"
       placeholder="Nome do posto" 
-      value={atendimento.cliente} 
-      onChange={ e => this.setState({ atendimento: {... atendimento, cliente: e.target.value} })}
+      value={this.state.atendimento.cliente} 
+      onChange={ e => this.setState({ atendimento: { ...atendimento, cliente: e.target.value} })}
     />
 
   </div>
@@ -79,8 +94,8 @@ export default class New extends Component {
     class="form-control" 
     id="exampleFormControlInput1" 
     placeholder="Nome do solicitante" 
-    value={atendimento.solicitante} 
-    onChange={ e => this.setState({ atendimento: {... atendimento, solicitante: e.target.value} })}
+    value={this.state.atendimento.solicitante} 
+    onChange={ e => this.setState({ atendimento: {...atendimento, solicitante: e.target.value} })}
     />
   </div>
   </div>
@@ -90,7 +105,8 @@ export default class New extends Component {
     <select 
     class="form-control" 
     id="exampleFormControlSelect1" 
-    onChange={ e => this.setState({ atendimento: {... atendimento, prioridade: e.target.value} })}
+    value={atendimento.prioridade}
+    onChange={ e => this.setState({ atendimento: {...atendimento, prioridade: e.target.value} })}
     >
       <option>--</option>
       <option>Baixa</option>
@@ -104,6 +120,8 @@ export default class New extends Component {
     <select 
     class="form-control" 
     id="exampleFormControlSelect1" 
+    value={this.state.atendimento.situacao}
+    onChange={ e => this.setState({ atendimento: {...atendimento, situacao: e.target.value} })}
     >
       <option>--</option>
       <option>Aberto</option>
@@ -117,7 +135,7 @@ export default class New extends Component {
     <select 
     multiple class="form-control" 
     id="exampleFormControlSelect2"
-    onChange={ e => this.setState({ atendimento: {... atendimento, responsavel: e.target.value} })}
+    onChange={ e => this.setState({ atendimento: {...atendimento, responsavel: e.target.value} })}
     >
       <option>-</option>
       <option>George</option>
@@ -134,8 +152,8 @@ export default class New extends Component {
     class="form-control" 
     id="exampleFormControlTextarea1" 
     rows="2"
-    value={atendimento.problema} 
-    onChange={ e => this.setState({ atendimento: {... atendimento, problema: e.target.value} })}
+    value={this.state.atendimento.problema} 
+    onChange={ e => this.setState({ atendimento: {...atendimento, problema: e.target.value} })}
     ></textarea>
   </div>
   <div class="form-group col-sm-6 my-1">
@@ -144,8 +162,8 @@ export default class New extends Component {
     class="form-control" 
     id="exampleFormControlTextarea1" 
     rows="2"
-    value={atendimento.solucao} 
-    onChange={ e => this.setState({ atendimento: {... atendimento, solucao: e.target.value} })}
+    value={this.state.atendimento.solucao} 
+    onChange={ e => this.setState({ atendimento: {...atendimento, solucao: e.target.value} })}
     >
     </textarea>
   </div>

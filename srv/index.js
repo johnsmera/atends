@@ -7,6 +7,8 @@ const app = express();
 //Query MySQL
 
 const QUERY_SELECT_ATENDIMENTOS = 'SELECT * FROM atendimentos ORDER BY id_atendimento';
+//const QUERY_SELECT_ATENDIMENTO = `SELECT * atendimentos WHERE id_atendimento= ('${cliente}','${solicitante}','${prioridade}','${situacao}','${responsavel}','${problema}','${solucao}')`;
+
 
 //Fim Query MySQL
 
@@ -15,7 +17,7 @@ const QUERY_SELECT_ATENDIMENTOS = 'SELECT * FROM atendimentos ORDER BY id_atendi
 const connection = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: '',
+    password: 'gzzd@yu6s',
     database: 'atends',
     insecureAuth: true
 });
@@ -50,6 +52,19 @@ app.get('/atendimentos', (req, res) =>{
         }
     })
 });
+
+
+//Get um atendimento
+app.get('/atendimentos/:id', (req, res) => {
+    const obtemId = req.params.id;
+    connection.query(`SELECT * FROM atendimentos WHERE id_atendimento = ${obtemId}`, (err, rows, fields) => {
+        if (!err)
+            res.send(req.body);
+        else
+            res.send(err);
+    })
+});
+
 
 
 app.get('/atendimentos/add', (req,res) => {
