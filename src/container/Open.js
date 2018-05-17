@@ -6,6 +6,7 @@ export default class Open extends Component {
     state = {
         atendimentos: [],
         atendimento: {
+          id_atendimento: '',
           cliente: 'Cliente',
           solicitante: 'Solicitante',
           prioridade: 'Prioridade',
@@ -26,6 +27,15 @@ export default class Open extends Component {
           .then(response => this.setState({ atendimentos: response.data  }))
           .catch(err => {console.log(err)})
       }
+
+      getAtendimento = (idAt) => {
+        const { atendimento } = this.state;
+        fetch(`http://localhost:4000/atendimentos/${idAt}`)
+          .then(response => response.json())
+          .then(response => this.setState({ atendimentos: response.data  }))
+          .then(console.log(this.state.atendimentos))
+          .catch(err => {console.log(err)})
+      }
     
       addAtendimento = _ => {
         const { atendimento } = this.state;
@@ -34,6 +44,11 @@ export default class Open extends Component {
           .then(this.getAtendimentos)
           .catch(err => console.error(err))
       }
+
+      editAtendimento = (keyid) => {
+        return keyid;
+
+      }
     
         
       renderTr = ({id_atendimento, cliente, situacao}) => 
@@ -41,8 +56,15 @@ export default class Open extends Component {
         <th scope="row">{id_atendimento}</th>
         <td>{cliente}</td>
         <td>{situacao}</td>
-        <td><button type="button" class="btn btn-primary btn-sm">Ver/Editar</button><span>|</span>
-            <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+        <td><button type="button"  
+        
+        onClick={() =>{ 
+            
+            this.getAtendimento(id_atendimento)}
+        } 
+        formAction={`http://localhost:3000/edit`}
+        class="btn btn-primary btn-sm">Ver/Editar</button>
+            <button type="button" style={{marginLeft: '8px'}} class="btn btn-danger btn-sm">Excluir</button>
         </td>
      </tr>
       
