@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import ReleaseForm from '../ui/ReleaseForm';
-
+import {Link} from 'react-router'
 export default class Open extends Component {
 
     state = {
         atendimentos: [],
+        oneAtendimento: [],
         atendimento: {
           id_atendimento: '',
           cliente: 'Cliente',
@@ -19,6 +20,7 @@ export default class Open extends Component {
       
       componentDidMount() {
         this.getAtendimentos();
+        
       }
     
       getAtendimentos = _ => {
@@ -29,11 +31,11 @@ export default class Open extends Component {
       }
 
       getAtendimento = (idAt) => {
-        const { atendimento } = this.state;
-        fetch(`http://localhost:4000/atendimentos/${idAt}`)
+        const { oneAtendimento } = this.state;
+        fetch(`http://localhost:4000/atendimento/edit/${idAt}`)
           .then(response => response.json())
-          .then(response => this.setState({ atendimentos: response.data  }))
-          .then(console.log(this.state.atendimentos))
+          .then(response => this.setState({ oneAtendimento: response.data  }))
+          .then(console.log(this.state.oneAtendimento))
           .catch(err => {console.log(err)})
       }
     
@@ -44,34 +46,25 @@ export default class Open extends Component {
           .then(this.getAtendimentos)
           .catch(err => console.error(err))
       }
-
-      editAtendimento = (keyid) => {
-        return keyid;
-
-      }
-    
-        
+   
       renderTr = ({id_atendimento, cliente, situacao}) => 
         <tr key={id_atendimento}>
         <th scope="row">{id_atendimento}</th>
         <td>{cliente}</td>
         <td>{situacao}</td>
-        <td><button type="button"  
-        
+        <td><Link to={`/edit/${id_atendimento}`} type="button"  
         onClick={() =>{ 
-            
-            this.getAtendimento(id_atendimento)}
+        
+             this.getAtendimento(id_atendimento)}
         } 
-        formAction={`http://localhost:3000/edit`}
-        class="btn btn-primary btn-sm">Ver/Editar</button>
-            <button type="button" style={{marginLeft: '8px'}} class="btn btn-danger btn-sm">Excluir</button>
+        class="btn btn-primary btn-sm">Ver/Editar</Link>
+            <Link to='/edit/:id' type="button" style={{marginLeft: '8px'}} class="btn btn-danger btn-sm">Excluir</Link>
         </td>
      </tr>
       
-
     render() {
 
-        const { atendimentos, atendimento } = this.state;
+        const { atendimentos, atendimento,oneAtendimento } = this.state;
 
         return (
             <div class="container text-center"><br/>
@@ -92,12 +85,7 @@ export default class Open extends Component {
                         </tr>
                     </thead>
                     <tbody>
-
                          {atendimentos.map(this.renderTr)}
-
-                        
-
-
                     </tbody>
                 </table>
             </div>

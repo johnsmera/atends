@@ -4,9 +4,9 @@ import Modal from './../ui/ModalMessageAdd';
 export default class Edit extends Component {
 
   state = {
+    oneAtendimento:[],
     atendimentos: [],
     atendimento: {
-      id_atendimento: '',
       cliente: '',
       solicitante: '',
       prioridade: '',
@@ -22,7 +22,7 @@ export default class Edit extends Component {
   
 
   componentDidMount() {
-    this.getAtendimentos();
+    this.getAtendimento();
   }
   
   getAtendimentos = _ => {
@@ -32,16 +32,12 @@ export default class Edit extends Component {
       .catch(err => {console.log(err)})
   }
 
-  
-  getAtendimento = _ => {
-    const { atendimento } = this.state;
-    fetch(`http://localhost:4000/atendimentos/${atendimento.id_atendimento}`)
+  getAtendimento = (idAt) => {
+    fetch(`http://localhost:4000/atendimento/edit/`)
       .then(response => response.json())
-      .then(response => this.setState({ atendimentos: response.data  }))
-      .then(console.log(this.state.atendimentos))
+      .then(response => this.setState({ oneAtendimento: response.data  }))
       .catch(err => {console.log(err)})
   }
-
 
   addAtendimento = _ => {
     const { atendimento } = this.state;
@@ -95,7 +91,7 @@ export default class Edit extends Component {
       id="exampleFormControlInput1"
       placeholder="Nome do posto" 
       value={this.state.atendimento.cliente} 
-      onChange={ e => this.setState({ atendimento: { ...atendimento, cliente: e.target.value} })}
+      //onChange={ e => this.setState({ atendimento: { ...atendimento, cliente: e.target.value} })}
     />
 
   </div>

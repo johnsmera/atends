@@ -55,18 +55,15 @@ app.get('/atendimentos', (req, res) =>{
 
 
 //Get um atendimento
-app.get('/atendimentos/:id', (req, res) => {
+app.get('/atendimento/edit/:id', (req, res) => {
     const obtemId = req.params.id;
     connection.query(`SELECT * FROM atendimentos WHERE id_atendimento = ${obtemId}`, (err, rows, fields) => {
-        if (!err)
-            res.json({data: rows});
-        else
-            res.send(err);
+        if (!err) {
+            return res.json({data: rows});    
+        }else
+            return res.send(err);
     })
 });
-
-
-
 
 
 app.get('/atendimentos/add', (req,res) => {
