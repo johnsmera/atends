@@ -7,7 +7,7 @@ export default class Modal extends React.Component {
         } else {
             return (
                 <div class="alert alert-success" role="alert">
-                     Atendimento incluído com sucesso.
+                     {this.props.msg}
                 </div>
             
             )

@@ -53,10 +53,10 @@ export default class Open extends Component {
         <td>{cliente}</td>
         <td>{situacao}</td>
         <td><Link to={`/edit/${id_atendimento}`} type="button"  
-        onClick={() =>{ 
+        // onClick={() =>{ 
         
-             this.getAtendimento(id_atendimento)}
-        } 
+        //      this.getAtendimento(id_atendimento)}
+        // } 
         class="btn btn-primary btn-sm">Ver/Editar</Link>
             <Link to='/edit/:id' type="button" style={{marginLeft: '8px'}} class="btn btn-danger btn-sm">Excluir</Link>
         </td>

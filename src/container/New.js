@@ -72,7 +72,7 @@ export default class New extends Component {
     <li class="breadcrumb-item active" aria-current="page">Novo</li>
   </ol>
 </nav>
-<Modal showModal={this.state.showModal}> </Modal>
+<Modal msg="Atendimento adicionado com sucesso!" showModal={this.state.showModal}> </Modal>
         <form>
   <div class="row">
   <div class="form-group col-sm-6">

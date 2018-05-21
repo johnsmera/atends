@@ -4,16 +4,16 @@ import Modal from './../ui/ModalMessageAdd';
 export default class Edit extends Component {
 
   state = {
-    oneAtendimento:[],
-    atendimentos: [],
+    // oneAtendimento:[],
+    // atendimentos: [],
     atendimento: {
-      cliente: '',
-      solicitante: '',
-      prioridade: '',
-      situacao: '',
-      responsavel: '',
-      problema: '',
-      solucao: '',
+      // cliente: '',
+      // solicitante: '',
+      // prioridade: '',
+      // situacao: '',
+      // responsavel: '',
+      // problema: '',
+      // solucao: '',
     },
     showModal: false
   }
@@ -22,7 +22,9 @@ export default class Edit extends Component {
   
 
   componentDidMount() {
-    this.getAtendimento();
+    const { id } = this.props.params;
+    this.getAtendimento(id)
+    // this.getAtendimento();
   }
   
   getAtendimentos = _ => {
@@ -33,15 +35,15 @@ export default class Edit extends Component {
   }
 
   getAtendimento = (idAt) => {
-    fetch(`http://localhost:4000/atendimento/edit/`)
+    fetch(`http://localhost:4000/atendimento/edit/${idAt}`)
       .then(response => response.json())
-      .then(response => this.setState({ oneAtendimento: response.data  }))
+      .then(response => this.setState({ atendimento: response.data[0]  }))
       .catch(err => {console.log(err)})
   }
 
-  addAtendimento = _ => {
+  attAtendimento = _ => {
     const { atendimento } = this.state;
-    fetch(`http://localhost:4000/atendimentos/add?cliente=${atendimento.cliente}&solicitante=${atendimento.solicitante}&prioridade=${atendimento.prioridade}&situacao=${atendimento.situacao}&responsavel=${atendimento.responsavel}&problema=${atendimento.problema}&solucao=${atendimento.solucao}`)
+    fetch(`http://localhost:4000/atendimentos/edit?cliente=${atendimento.cliente}&solicitante=${atendimento.solicitante}&prioridade=${atendimento.prioridade}&situacao=${atendimento.situacao}&responsavel=${atendimento.responsavel}&problema=${atendimento.problema}&solucao=${atendimento.solucao}`)
       .then(response => response.json())
       .then(this.getAtendimentos)
       .catch(err => console.error(err))
@@ -66,7 +68,7 @@ export default class Edit extends Component {
     render() {
 
       const { atendimento } = this.state;
-
+      console.log(atendimento)
 
 
         return (
@@ -80,7 +82,7 @@ export default class Edit extends Component {
     <li class="breadcrumb-item active" aria-current="page">Novo</li>
   </ol>
 </nav>
-<Modal showModal={this.state.showModal}> </Modal>
+<Modal msg="Editado com sucesso" showModal={this.state.showModal}> </Modal>
         <form>
   <div class="row">
   <div class="form-group col-sm-6">

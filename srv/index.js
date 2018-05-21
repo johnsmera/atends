@@ -59,7 +59,8 @@ app.get('/atendimento/edit/:id', (req, res) => {
     const obtemId = req.params.id;
     connection.query(`SELECT * FROM atendimentos WHERE id_atendimento = ${obtemId}`, (err, rows, fields) => {
         if (!err) {
-            return res.json({data: rows});    
+            // return res.json({data: rows});    
+            return res.status(200).send(rows);
         }else
             return res.send(err);
     })
